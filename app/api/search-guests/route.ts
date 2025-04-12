@@ -9,6 +9,12 @@ interface Guest {
   attending?: boolean | null;
 }
 
+interface FamilyGroup {
+  recordId: string;
+  kidsInvited: boolean;
+  guests: Guest[];
+}
+
 /**
  * API handler to search for guests by phone number
  */
@@ -74,48 +80,72 @@ export async function GET(request: NextRequest) {
 
     // Process each record to extract all family members
     const allGuests: Guest[] = [];
+    const familyGroups: FamilyGroup[] = [];
 
     data.records.forEach((record: any) => {
       const fields = record.fields;
+      const kidsInvited = fields['Kids-Invited?'] === true;
+      const familyGuests: Guest[] = [];
 
       // Add primary person
       if (fields['First Name']) {
-        allGuests.push({
+        const primaryGuest: Guest = {
           id: `${record.id}-primary`,
           name: `${fields['First Name']} ${fields['Last Name'] || ''}`.trim(),
           type: 'primary',
           recordId: record.id,
-          attending: fields['RSVP_Primary'] || null,
-        });
+          attending: fields['Person1-RSVP'] || null,
+        };
+        allGuests.push(primaryGuest);
+        familyGuests.push(primaryGuest);
       }
 
       // Add partner if exists
       if (fields['Partner First Name']) {
-        allGuests.push({
+        const partnerGuest: Guest = {
           id: `${record.id}-partner`,
           name: `${fields['Partner First Name']} ${fields['Partner Last Name'] || ''}`.trim(),
           type: 'partner',
           recordId: record.id,
-          attending: fields['RSVP_Partner'] || null,
-        });
+          attending: fields['Person2-RSVP'] || null,
+        };
+        allGuests.push(partnerGuest);
+        familyGuests.push(partnerGuest);
       }
 
-      // Add children if they exist
-      for (let i = 1; i <= 6; i++) {
-        if (fields[`Child ${i}`] && fields[`Child ${i}`].trim()) {
-          allGuests.push({
-            id: `${record.id}-child-${i}`,
-            name: fields[`Child ${i}`].trim(),
-            type: 'child',
-            recordId: record.id,
-            attending: fields[`RSVP_Child_${i}`] || null,
-          });
+      // Add children if they exist and Kids-Invited is true
+      if (kidsInvited) {
+        for (let i = 1; i <= 6; i++) {
+          if (fields[`Child ${i}`] && fields[`Child ${i}`].trim()) {
+            const childGuest: Guest = {
+              id: `${record.id}-child-${i}`,
+              name: fields[`Child ${i}`].trim(),
+              type: 'child',
+              recordId: record.id,
+              attending: fields['Children-RSVP'] || null,
+            };
+            allGuests.push(childGuest);
+            familyGuests.push(childGuest);
+          }
         }
       }
+
+      // Add family group with Kids-Invited flag
+      familyGroups.push({
+        recordId: record.id,
+        kidsInvited,
+        guests: familyGuests
+      });
     });
 
+    // Add kidsInvited information to the response
+    const response_data = {
+      guests: allGuests,
+      familyGroups: familyGroups
+    };
+
     console.log(`Returning ${allGuests.length} guests`);
-    return NextResponse.json(allGuests, { status: 200 });
+    return NextResponse.json(response_data, { status: 200 });
   } catch (error) {
     console.error('Error in search-guests API:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

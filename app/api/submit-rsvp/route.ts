@@ -13,6 +13,7 @@ interface RsvpResponseItem {
   guestResponses: GuestResponse[];
   notes?: string;
   songRequest?: string;
+  kidsInvited: boolean;
 }
 
 interface SubmitRsvpRequest {
@@ -54,23 +55,25 @@ export async function POST(request: NextRequest) {
         acc[response.recordId] = {
           id: response.recordId,
           fields: {
-            // Add song request field and notes
-            RSVP_Notes: body.notes || '',
-            RSVP_Song_Request: body.songRequest || '',
-            RSVP_Date: new Date().toISOString(),
+            // Use the exact field names from Airtable CSV file
+            'Song_Request': body.songRequest || '',
+            'Additional_Notes': body.notes || '',
           },
         };
       }
 
-      // Add responses for each guest type
+      // Convert boolean to string 'Yes'/'No' for Airtable
       response.guestResponses.forEach((guest) => {
         if (guest.type === 'primary') {
-          acc[response.recordId].fields['RSVP_Primary'] = guest.attending;
+          acc[response.recordId].fields['Person1-RSVP'] = guest.attending ? 'Yes' : 'No';
         } else if (guest.type === 'partner') {
-          acc[response.recordId].fields['RSVP_Partner'] = guest.attending;
+          acc[response.recordId].fields['Person2-RSVP'] = guest.attending ? 'Yes' : 'No';
         } else if (guest.type.startsWith('child')) {
-          const childNumber = guest.type.split('-')[1];
-          acc[response.recordId].fields[`RSVP_Child_${childNumber}`] = guest.attending;
+          // Only include children responses if Kids-Invited is true
+          const kidsInvited = response.kidsInvited ?? false;
+          if (kidsInvited) {
+            acc[response.recordId].fields['Children-RSVP'] = guest.attending ? 'Yes' : 'No';
+          }
         }
       });
 
