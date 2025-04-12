@@ -229,11 +229,11 @@ export function RSVPForm() {
       <StyledWrapper>
         <div className="content-wrapper">
           <h1>RSVP</h1>
-          <p className="form-description">Please enter your phone number to find your invitation.</p>
+          <p className="form-description">PLEASE ENTER YOUR PHONE NUMBER TO FIND YOUR INVITATION.</p>
           
           <form onSubmit={handleSearch}>
             <div className="form-group">
-              <label htmlFor="phone">Phone Number</label>
+              <label htmlFor="phone">PHONE NUMBER</label>
               <input
                 id="phone"
                 type="tel"
@@ -241,7 +241,6 @@ export function RSVPForm() {
                 value={phoneNumber}
                 onChange={handlePhoneChange}
               />
-              <p className="input-help">This should match the number you provided with your invitation.</p>
             </div>
 
             {error && (
@@ -253,7 +252,7 @@ export function RSVPForm() {
               className="primary-button"
               disabled={isSearching}
             >
-              {isSearching ? "Searching..." : "Find My Invitation"}
+              {isSearching ? "SEARCHING..." : "FIND MY INVITATION"}
             </button>
           </form>
         </div>
@@ -272,15 +271,15 @@ export function RSVPForm() {
           <h1>RSVP</h1>
           {hasExistingResponses ? (
             <div className="existing-data-message">
-              <p className="form-description">We found your previous RSVP! You can update your selections if needed.</p>
+              <p className="form-description">WE FOUND YOUR PREVIOUS RSVP! YOU CAN UPDATE YOUR SELECTIONS IF NEEDED.</p>
             </div>
           ) : (
-            <p className="form-description">We found {guests.length} {guests.length === 1 ? "guest" : "guests"} for your party.</p>
+            <p className="form-description">WE FOUND {guests.length} {guests.length === 1 ? "GUEST" : "GUESTS"} FOR YOUR PARTY.</p>
           )}
           
           <form onSubmit={handleSubmit}>
             <div className="form-section">
-              <h2>Will you be attending?</h2>
+              <h2>WILL YOU BE ATTENDING?</h2>
               
               {familyGroups.map((family) => (
                 <div key={family.recordId} className="guest-group">
@@ -289,8 +288,8 @@ export function RSVPForm() {
                     (guest.type !== 'child' || family.kidsInvited) && (
                       <div key={guest.id} className="guest-card">
                         <div className="guest-info">
-                          <p className="guest-name">{guest.name}</p>
-                          <p className="guest-type">{guest.type === 'child' ? 'Child' : ''}</p>
+                          <p className="guest-name">{guest.name.toUpperCase()}</p>
+                          <p className="guest-type">{guest.type === 'child' ? 'CHILD' : ''}</p>
                         </div>
                         <div className="choices-container">
                           <div 
@@ -324,7 +323,7 @@ export function RSVPForm() {
                                 </div>
                               </label>
                             </div>
-                            <span className="label">Yes</span>
+                            <span className="label">YES</span>
                           </div>
                           
                           <div 
@@ -357,7 +356,7 @@ export function RSVPForm() {
                                 </div>
                               </label>
                             </div>
-                            <span className="label">No</span>
+                            <span className="label">NO</span>
                           </div>
                         </div>
                       </div>
@@ -369,7 +368,7 @@ export function RSVPForm() {
             
             <div className="form-section">
               <div className="form-group">
-                <label htmlFor="song">Song Request</label>
+                <label htmlFor="song">SONG REQUEST</label>
                 <input
                   id="song"
                   type="text"
@@ -380,7 +379,7 @@ export function RSVPForm() {
               </div>
               
               <div className="form-group">
-                <label htmlFor="notes">Additional Notes</label>
+                <label htmlFor="notes">ADDITIONAL NOTES</label>
                 <textarea
                   id="notes"
                   placeholder="Dietary restrictions, accessibility needs, etc."
@@ -401,7 +400,7 @@ export function RSVPForm() {
                 className="secondary-button"
                 onClick={handleReset}
               >
-                Start Over
+                START OVER
               </button>
               
               <button
@@ -409,7 +408,7 @@ export function RSVPForm() {
                 className="primary-button"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Submitting..." : "Submit RSVP"}
+                {isSubmitting ? "SUBMITTING..." : "SUBMIT RSVP"}
               </button>
             </div>
           </form>
@@ -423,9 +422,9 @@ export function RSVPForm() {
     return (
       <StyledWrapper>
         <div className="content-wrapper">
-          <h1>Thank You</h1>
-          <p className="success-message">Your RSVP has been received!</p>
-          <p className="form-description">We look forward to celebrating with you.</p>
+          <h1>THANK YOU</h1>
+          <p className="success-message">YOUR RSVP HAS BEEN RECEIVED!</p>
+          <p className="form-description">WE LOOK FORWARD TO CELEBRATING WITH YOU.</p>
           
           <div className="button-group thank-you-buttons">
             <a 
