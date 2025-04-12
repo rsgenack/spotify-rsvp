@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation";
+import { RSVPForm } from "@/components/ui/rsvp-form"
 
 export default function Home() {
-  // Redirect to the framer page
-  redirect("/framer");
+  return (
+    <div id="rsvp-container">
+      <RSVPForm />
+    </div>
+  )
 }
