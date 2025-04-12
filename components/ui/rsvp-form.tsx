@@ -229,11 +229,11 @@ export function RSVPForm() {
       <StyledWrapper>
         <div className="content-wrapper">
           <h1>RSVP</h1>
-          <p className="form-description">PLEASE ENTER YOUR PHONE NUMBER TO FIND YOUR INVITATION.</p>
+          <p className="form-description">Please enter your phone number to find your invitation.</p>
           
           <form onSubmit={handleSearch}>
             <div className="form-group">
-              <label htmlFor="phone">PHONE NUMBER</label>
+              <label htmlFor="phone">Phone Number</label>
               <input
                 id="phone"
                 type="tel"
@@ -241,6 +241,7 @@ export function RSVPForm() {
                 value={phoneNumber}
                 onChange={handlePhoneChange}
               />
+              <p className="input-help">This should match the number you provided with your invitation.</p>
             </div>
 
             {error && (
@@ -252,7 +253,7 @@ export function RSVPForm() {
               className="primary-button"
               disabled={isSearching}
             >
-              {isSearching ? "SEARCHING..." : "FIND MY INVITATION"}
+              {isSearching ? "Searching..." : "Find My Invitation"}
             </button>
           </form>
         </div>
@@ -271,15 +272,15 @@ export function RSVPForm() {
           <h1>RSVP</h1>
           {hasExistingResponses ? (
             <div className="existing-data-message">
-              <p className="form-description">WE FOUND YOUR PREVIOUS RSVP! YOU CAN UPDATE YOUR SELECTIONS IF NEEDED.</p>
+              <p className="form-description">We found your previous RSVP! You can update your selections if needed.</p>
             </div>
           ) : (
-            <p className="form-description">WE FOUND {guests.length} {guests.length === 1 ? "GUEST" : "GUESTS"} FOR YOUR PARTY.</p>
+            <p className="form-description">We found {guests.length} {guests.length === 1 ? "guest" : "guests"} for your party.</p>
           )}
           
           <form onSubmit={handleSubmit}>
             <div className="form-section">
-              <h2>WILL YOU BE ATTENDING?</h2>
+              <h2>Will you be attending?</h2>
               
               {familyGroups.map((family) => (
                 <div key={family.recordId} className="guest-group">
@@ -289,7 +290,7 @@ export function RSVPForm() {
                       <div key={guest.id} className="guest-card">
                         <div className="guest-info">
                           <p className="guest-name">{guest.name}</p>
-                          <p className="guest-type">{guest.type === 'child' ? 'CHILD' : ''}</p>
+                          <p className="guest-type">{guest.type === 'child' ? 'Child' : ''}</p>
                         </div>
                         <div className="choices-container">
                           <div 
@@ -323,7 +324,7 @@ export function RSVPForm() {
                                 </div>
                               </label>
                             </div>
-                            <span className="label">YES</span>
+                            <span className="label">Yes</span>
                           </div>
                           
                           <div 
@@ -356,7 +357,7 @@ export function RSVPForm() {
                                 </div>
                               </label>
                             </div>
-                            <span className="label">NO</span>
+                            <span className="label">No</span>
                           </div>
                         </div>
                       </div>
@@ -368,7 +369,7 @@ export function RSVPForm() {
             
             <div className="form-section">
               <div className="form-group">
-                <label htmlFor="song">SONG REQUEST</label>
+                <label htmlFor="song">Song Request</label>
                 <input
                   id="song"
                   type="text"
@@ -379,7 +380,7 @@ export function RSVPForm() {
               </div>
               
               <div className="form-group">
-                <label htmlFor="notes">ADDITIONAL NOTES</label>
+                <label htmlFor="notes">Additional Notes</label>
                 <textarea
                   id="notes"
                   placeholder="Dietary restrictions, accessibility needs, etc."
@@ -400,7 +401,7 @@ export function RSVPForm() {
                 className="secondary-button"
                 onClick={handleReset}
               >
-                START OVER
+                Start Over
               </button>
               
               <button
@@ -408,7 +409,7 @@ export function RSVPForm() {
                 className="primary-button"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "SUBMITTING..." : "SUBMIT RSVP"}
+                {isSubmitting ? "Submitting..." : "Submit RSVP"}
               </button>
             </div>
           </form>
@@ -422,9 +423,9 @@ export function RSVPForm() {
     return (
       <StyledWrapper>
         <div className="content-wrapper">
-          <h1>THANK YOU</h1>
-          <p className="success-message">YOUR RSVP HAS BEEN RECEIVED!</p>
-          <p className="form-description">WE LOOK FORWARD TO CELEBRATING WITH YOU.</p>
+          <h1>Thank You</h1>
+          <p className="success-message">Your RSVP has been received!</p>
+          <p className="form-description">We look forward to celebrating with you.</p>
           
           <div className="button-group thank-you-buttons">
             <a 
@@ -461,7 +462,6 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  text-transform: uppercase;
   
   .content-wrapper {
     max-width: 800px;
@@ -522,29 +522,75 @@ const StyledWrapper = styled.div`
     padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-family: inherit;
+    font-family: 'Archivo Black', sans-serif;
     margin-bottom: 0.5rem;
-    text-transform: none;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .input-help {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #666;
-    text-transform: none;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    margin-top: 0.25rem;
   }
   
   .error-message {
-    color: #e53e3e;
+    background-color: rgba(220, 38, 38, 0.1);
+    color: rgb(220, 38, 38);
+    padding: 1rem;
+    border-radius: 8px;
     margin-bottom: 1.5rem;
     font-weight: bold;
   }
   
   .success-message {
-    color: #38a169;
     font-size: 1.5rem;
+    color: #4CAF50;
     margin-bottom: 1rem;
+  }
+  
+  .primary-button {
+    display: inline-block;
+    background-color: #677a3e;
+    color: #f0e9d7;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.2s;
+    letter-spacing: 0.05em;
+    
+    &:hover {
+      background-color: #556731;
+    }
+    
+    &:disabled {
+      background-color: #bdbab2;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+  
+  .secondary-button {
+    display: inline-block;
+    background-color: #bdbab2;
+    color: #37352f;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.2s;
+    letter-spacing: 0.05em;
+    
+    &:hover {
+      background-color: #a9a69e;
+    }
   }
   
   .button-group {
@@ -561,117 +607,85 @@ const StyledWrapper = styled.div`
     }
   }
   
-  .primary-button, .secondary-button {
-    font-size: 12px;
-    font-family: sans-serif;
-    box-sizing: border-box;
-    -webkit-font-smoothing: inherit;
-    align-content: flex-start;
-    align-items: flex-start;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 10px;
-    height: min-content;
-    justify-content: flex-start;
-    overflow: visible;
-    padding: 12px 24px 10px;
-    position: relative;
-    text-decoration: none;
-    width: min-content;
-    border-radius: 20px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-  }
-  
-  .primary-button {
-    background-color: #d2f348;
-    color: #37352f;
-    border: none;
-    
-    &:hover {
-      background-color: #E9F9A9;
-    }
-  }
-  
-  .secondary-button {
-    background-color: transparent;
-    color: #677a3e;
-    border: 1px solid #677a3e;
-    
-    &:hover {
-      background-color: rgba(103, 122, 62, 0.1);
-    }
-  }
-  
   .guest-group {
     margin-bottom: 2rem;
   }
   
   .guest-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 1.5rem;
     margin-bottom: 1rem;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    background-color: #fafafa;
   }
   
   .guest-info {
-    text-align: left;
+    margin-bottom: 1.5rem;
   }
   
   .guest-name {
+    font-size: 1.2rem;
     font-weight: bold;
-    margin: 0;
+    margin-bottom: 0.25rem;
   }
   
   .guest-type {
-    color: #666;
-    margin: 0;
     font-size: 0.9rem;
-  }
-  
-  .choices-container {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .choice {
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 2px solid transparent;
-    background-color: white;
-    transition: all 0.2s;
-    
-    &:hover {
-      background-color: #f9f9f9;
-    }
-    
-    &.selected-yes {
-      border-color: rgb(209, 243, 72);
-      background-color: rgba(209, 243, 72, 0.1);
-    }
-    
-    &.selected-no {
-      border-color: #4a2545;
-      background-color: rgba(74, 37, 69, 0.1);
-    }
-    
-    .label {
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-    }
+    color: #666;
+    text-transform: capitalize;
   }
   
   /* Yes/No Choice Styles from Heart Component */
+  .choices-container {
+    display: flex;
+    gap: 3.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .choice:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    transform: translateY(-2px);
+  }
+  
+  .selected-yes {
+    background-color: rgba(231, 84, 128, 0.1);
+    border: 2px solid rgba(231, 84, 128, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .selected-no {
+    background-color: rgba(37, 99, 235, 0.1);
+    border: 2px solid rgba(37, 99, 235, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .icon-wrapper {
+    padding: 0.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+    transform: scale(1.2);
+  }
+  
+  .label {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    color: #37352f;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Heart styles */
   .heart-container {
     display: block;
     position: relative;
