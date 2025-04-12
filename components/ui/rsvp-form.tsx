@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import styled from "styled-components"
+import { SpotifySearch } from "./spotify-search"
 
 interface Guest {
   id: string
@@ -29,7 +30,18 @@ interface RsvpResponse {
   guestResponses: GuestResponse[]
   notes: string
   songRequest: string
+  spotifyTrackUri?: string
   kidsInvited: boolean
+}
+
+interface Track {
+  id: string
+  name: string
+  artist: string
+  album: string
+  albumArt: string
+  uri: string
+  previewUrl: string | null
 }
 
 export function RSVPForm() {
@@ -38,6 +50,7 @@ export function RSVPForm() {
   const [familyGroups, setFamilyGroups] = useState<FamilyGroup[]>([])
   const [responses, setResponses] = useState<Record<string, boolean>>({})
   const [songRequest, setSongRequest] = useState("")
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null)
   const [notes, setNotes] = useState("")
   const [isSearching, setIsSearching] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -153,6 +166,17 @@ export function RSVPForm() {
     }))
   }
 
+  // Handle track selection
+  const handleTrackSelect = (track: Track | null) => {
+    setSelectedTrack(track)
+    // If a track is selected, set the song request to the track name and artist
+    if (track) {
+      setSongRequest(`${track.name} by ${track.artist}`)
+    } else {
+      setSongRequest("")
+    }
+  }
+
   // Submit RSVP responses
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -179,7 +203,8 @@ export function RSVPForm() {
             attending: responses[guest.id],
           })),
           notes: notes,
-          songRequest: songRequest
+          songRequest: songRequest,
+          spotifyTrackUri: selectedTrack?.uri
         }
       })
 
@@ -195,12 +220,36 @@ export function RSVPForm() {
           phoneNumber: `+1${cleanedPhone}`,
           responses: formattedResponses,
           notes: notes,
-          songRequest: songRequest
+          songRequest: songRequest,
+          spotifyTrackUri: selectedTrack?.uri
         }),
       })
 
       if (!submitResponse.ok) {
         throw new Error("Failed to submit RSVP")
+      }
+
+      // If a track was selected, add it to the playlist
+      if (selectedTrack) {
+        try {
+          const playlistResponse = await fetch('/api/spotify/add-to-playlist', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              trackUri: selectedTrack.uri
+            }),
+          })
+
+          // If there was an error adding to the playlist, we'll log it but continue with the submission
+          if (!playlistResponse.ok) {
+            console.error("Could not add song to playlist, but RSVP was saved successfully")
+          }
+        } catch (error) {
+          console.error("Error adding track to playlist:", error)
+          // Don't fail the submission if playlist add fails
+        }
       }
 
       setStep("thanks")
@@ -219,6 +268,7 @@ export function RSVPForm() {
     setFamilyGroups([])
     setResponses({})
     setSongRequest("")
+    setSelectedTrack(null)
     setNotes("")
     setError("")
   }
@@ -367,16 +417,13 @@ export function RSVPForm() {
             </div>
             
             <div className="form-section">
-              <div className="form-group">
-                <label htmlFor="song">SONG REQUEST</label>
-                <input
-                  id="song"
-                  type="text"
-                  placeholder="Any song you'd like to hear at the reception"
-                  value={songRequest}
-                  onChange={(e) => setSongRequest(e.target.value)}
-                />
-              </div>
+              <h2>SONG REQUEST</h2>
+              <p className="section-description">HELP US CREATE THE PERFECT PLAYLIST FOR THE RECEPTION!</p>
+              
+              <SpotifySearch 
+                onSelect={handleTrackSelect}
+                selectedTrack={selectedTrack}
+              />
               
               <div className="form-group">
                 <label htmlFor="notes">ADDITIONAL NOTES</label>

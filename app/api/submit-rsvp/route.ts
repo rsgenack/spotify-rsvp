@@ -13,6 +13,7 @@ interface RsvpResponseItem {
   guestResponses: GuestResponse[];
   notes?: string;
   songRequest?: string;
+  spotifyTrackUri?: string;
   kidsInvited: boolean;
 }
 
@@ -21,6 +22,7 @@ interface SubmitRsvpRequest {
   responses: RsvpResponseItem[];
   notes: string;
   songRequest: string;
+  spotifyTrackUri?: string;
 }
 
 /**
@@ -58,6 +60,7 @@ export async function POST(request: NextRequest) {
             // Use the exact field names that match Airtable
             'Song_Request': body.songRequest || '',
             'Additional_Notes': body.notes || '',
+            // Removed Spotify_Track_URI field since it doesn't exist in Airtable
           },
         };
       }
@@ -101,6 +104,33 @@ export async function POST(request: NextRequest) {
 
     const responseData = await airtableResponse.json();
     console.log(`Successfully updated ${responseData.records?.length || 0} records in Airtable`);
+
+    // If a Spotify track URI was provided, add it to the playlist
+    if (body.spotifyTrackUri) {
+      try {
+        console.log(`Adding track ${body.spotifyTrackUri} to playlist`);
+        
+        // Call the add-to-playlist endpoint
+        const playlistResponse = await fetch(new URL('/api/spotify/add-to-playlist', request.url).toString(), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            trackUri: body.spotifyTrackUri
+          }),
+        });
+        
+        if (!playlistResponse.ok) {
+          console.error('Failed to add track to playlist:', await playlistResponse.text());
+        } else {
+          console.log('Track successfully queued for playlist');
+        }
+      } catch (error) {
+        console.error('Error adding track to playlist:', error);
+        // Don't fail the submission if playlist add fails
+      }
+    }
 
     return NextResponse.json({ 
       success: true,

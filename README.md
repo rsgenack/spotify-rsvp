@@ -1,73 +1,85 @@
-# Minimal RSVP Form with Airtable Integration
+# Wedding RSVP with Spotify Integration
 
-A completely stripped-down implementation of an RSVP form that connects to Airtable. The project has been reduced to only the essential files needed for functionality, making it extremely easy to apply your own custom styling.
+A wedding RSVP application with Spotify song request integration that allows guests to search for and request songs that will be added to your wedding playlist.
 
-## Core Features
+## Features
 
-- Phone number lookup to find guest records in Airtable
-- RSVP form for multiple guests in a family/group
-- Song request and additional notes fields
-- Submission to Airtable API
-- Thank you confirmation page
+- RSVP form for wedding guests
+- Phone number-based guest lookup
+- Spotify song search integration
+- Automatic addition of requested songs to a Spotify playlist
+- Airtable integration for storing guest information and responses
 
-## Project Structure
+## Setup
 
-This project has been stripped to its bare essentials:
+### Prerequisites
 
-- `/app/api/search-guests` - API endpoint to search for guests by phone number
-- `/app/api/submit-rsvp` - API endpoint to submit RSVP responses to Airtable
-- `/components/ui/rsvp-form.tsx` - Core RSVP form component with no styling
-- `/app/framer/page.tsx` - Main page that displays the RSVP form
-- `/app/globals.css` - Minimal CSS with only Tailwind imports
-- `/app/layout.tsx` - Simple layout component
+- Node.js 16+ and npm/pnpm
+- Spotify Developer account with app credentials
+- Airtable account with a base for guest information
 
-All unnecessary files and components have been removed.
+### Installation
 
-## HTML Structure for Styling
-
-The form has no styling and uses simple HTML elements with semantic IDs:
-
-### Main Container IDs
-
-- `#rsvp-container` - The main container for the entire RSVP form
-- `#phone-entry` - The phone number entry screen
-- `#guest-response` - The guest response screen
-- `#thank-you` - The thank you confirmation screen
-- `#error` - Error message container
-
-## Configuration
-
-Make sure your `.env.local` file contains the following variables:
-
+1. Clone the repository:
+```bash
+git clone https://github.com/rsgenack/spotify-rsvp.git
+cd spotify-rsvp
 ```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+pnpm install
+```
+
+3. Set up environment variables:
+Create a `.env` file with the following:
+```
+# Airtable credentials
 AIRTABLE_API_KEY=your_airtable_api_key
 AIRTABLE_BASE_ID=your_airtable_base_id
+
+# Spotify credentials
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+SPOTIFY_PLAYLIST_ID=your_spotify_playlist_id
+SPOTIFY_REDIRECT_URI=http://localhost:3001/callback
 ```
 
-## Airtable Structure
+4. Authenticate with Spotify (for playlist owner):
+```bash
+node scripts/get-owner-spotify-token.mjs
+```
+Follow the prompts to authenticate with your Spotify account.
 
-The application expects an Airtable base with a table named "Address Collector" that has the following fields:
-
-- `Phone Number` - Primary phone number for lookup
-- `Partner Phone Number` - Optional secondary phone number
-- `First Name` - Primary guest's first name
-- `Last Name` - Primary guest's last name
-- `Partner First Name` - Partner's first name (if applicable)
-- `Partner Last Name` - Partner's last name (if applicable)
-- `Child 1` through `Child 6` - Names of children (if applicable)
-- `RSVP_Primary` - Boolean for primary guest's attendance
-- `RSVP_Partner` - Boolean for partner's attendance
-- `RSVP_Child_1` through `RSVP_Child_6` - Booleans for children's attendance
-- `RSVP_Notes` - Text field for additional notes
-- `RSVP_Song_Request` - Text field for song requests
-- `RSVP_Date` - Date field for when the RSVP was submitted
-
-## Development
-
-Run the development server:
-
+5. Start the development server:
 ```bash
 npm run dev
+# or
+npx next dev
 ```
 
-The application will be available at [http://localhost:3000](http://localhost:3000). 
+## How It Works
+
+1. Wedding guests access the RSVP form and enter their phone number
+2. The app searches for matching guests in Airtable
+3. Guests can select who's attending and search for song requests
+4. When a song is selected and the form submitted:
+   - RSVP responses are saved to Airtable
+   - The requested song is added to your Spotify playlist using your credentials
+
+## Environment Variables
+
+- `AIRTABLE_API_KEY`: Your Airtable API key
+- `AIRTABLE_BASE_ID`: Your Airtable base ID
+- `SPOTIFY_CLIENT_ID`: Your Spotify app client ID
+- `SPOTIFY_CLIENT_SECRET`: Your Spotify app client secret
+- `SPOTIFY_PLAYLIST_ID`: ID of the Spotify playlist to add songs to
+- `SPOTIFY_REDIRECT_URI`: Redirect URI for Spotify authentication
+- `SPOTIFY_ACCESS_TOKEN`: Spotify access token (added by auth script)
+- `SPOTIFY_REFRESH_TOKEN`: Spotify refresh token (added by auth script)
+
+## License
+
+MIT License - See LICENSE file for details. 
