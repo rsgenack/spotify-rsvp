@@ -426,12 +426,24 @@ export function RSVPForm() {
           <h1>Thank You</h1>
           <p className="success-message">Your RSVP has been received!</p>
           <p className="form-description">We look forward to celebrating with you.</p>
-          <button 
-            onClick={handleReset}
-            className="primary-button"
-          >
-            Return to Form
-          </button>
+          
+          <div className="button-group thank-you-buttons">
+            <a 
+              href="https://withjoy.com/thegruhins/registry"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="registry-button"
+            >
+              View Registry
+            </a>
+            
+            <button 
+              onClick={handleReset}
+              className="secondary-button"
+            >
+              Return to Form
+            </button>
+          </div>
         </div>
       </StyledWrapper>
     )
@@ -577,8 +589,35 @@ const StyledWrapper = styled.div`
   
   .button-group {
     display: flex;
-    justify-content: center;
     gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+    
+    &.thank-you-buttons {
+      flex-direction: column;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  .registry-button {
+    display: inline-block;
+    background-color: #4a2545;
+    color: white;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: #6a3564;
+    }
   }
   
   .guest-group {
