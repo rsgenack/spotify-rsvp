@@ -432,16 +432,16 @@ export function RSVPForm() {
               href="https://withjoy.com/thegruhins/registry"
               target="_blank"
               rel="noopener noreferrer"
-              className="registry-button"
+              className="primary-button"
             >
-              View Registry
+              VIEW OUR REGISTRY
             </a>
             
             <button 
               onClick={handleReset}
               className="secondary-button"
             >
-              Return to Form
+              EDIT MY RESPONSES
             </button>
           </div>
         </div>
@@ -462,6 +462,7 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-transform: uppercase;
   
   .content-wrapper {
     max-width: 800px;
@@ -522,69 +523,29 @@ const StyledWrapper = styled.div`
     padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: inherit;
     margin-bottom: 0.5rem;
+    text-transform: none;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .input-help {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #666;
-    margin-top: 0.25rem;
+    text-transform: none;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .error-message {
-    background-color: rgba(220, 38, 38, 0.1);
-    color: rgb(220, 38, 38);
-    padding: 1rem;
-    border-radius: 8px;
+    color: #e53e3e;
     margin-bottom: 1.5rem;
     font-weight: bold;
   }
   
   .success-message {
+    color: #38a169;
     font-size: 1.5rem;
-    color: #4CAF50;
     margin-bottom: 1rem;
-  }
-  
-  .primary-button {
-    padding: 0.9rem 1.8rem;
-    background-color: rgb(209, 243, 72);
-    color: #37352f;
-    border: none;
-    border-radius: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 1rem;
-  }
-  
-  .primary-button:hover {
-    background-color: rgb(189, 223, 52);
-    transform: translateY(-2px);
-  }
-  
-  .primary-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .secondary-button {
-    padding: 0.9rem 1.8rem;
-    background: transparent;
-    border: 1px solid #ddd;
-    border-radius: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 1rem;
-  }
-  
-  .secondary-button:hover {
-    background-color: #f0f0f0;
-    border-color: #ccc;
   }
   
   .button-group {
@@ -601,10 +562,8 @@ const StyledWrapper = styled.div`
     }
   }
   
-  .registry-button {
+  .primary-button, .secondary-button {
     display: inline-block;
-    background-color: #4a2545;
-    color: white;
     font-weight: bold;
     padding: 0.8rem 1.5rem;
     border-radius: 8px;
@@ -613,10 +572,34 @@ const StyledWrapper = styled.div`
     text-decoration: none;
     font-size: 1rem;
     text-align: center;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
+    letter-spacing: 0.5px;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  .primary-button {
+    background-color: #4a2545;
+    color: white;
     
     &:hover {
       background-color: #6a3564;
+    }
+  }
+  
+  .secondary-button {
+    background-color: #f5f5f5;
+    color: #4a2545;
+    border: 1px solid #e0e0e0;
+    
+    &:hover {
+      background-color: #e8e8e8;
     }
   }
   
@@ -625,80 +608,68 @@ const StyledWrapper = styled.div`
   }
   
   .guest-card {
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
     margin-bottom: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #fafafa;
   }
   
   .guest-info {
-    margin-bottom: 1.5rem;
+    text-align: left;
   }
   
   .guest-name {
-    font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    margin: 0;
   }
   
   .guest-type {
-    font-size: 0.9rem;
     color: #666;
-    text-transform: capitalize;
+    margin: 0;
+    font-size: 0.9rem;
   }
   
-  /* Yes/No Choice Styles from Heart Component */
   .choices-container {
     display: flex;
-    gap: 3.5rem;
-    justify-content: center;
-    margin-top: 1rem;
+    gap: 1rem;
   }
   
   .choice {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
-    padding: 1.5rem 2rem;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    position: relative;
+    border: 2px solid transparent;
+    background-color: white;
+    transition: all 0.2s;
+    
+    &:hover {
+      background-color: #f9f9f9;
+    }
+    
+    &.selected-yes {
+      border-color: rgb(209, 243, 72);
+      background-color: rgba(209, 243, 72, 0.1);
+    }
+    
+    &.selected-no {
+      border-color: #4a2545;
+      background-color: rgba(74, 37, 69, 0.1);
+    }
+    
+    .label {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
   }
   
-  .choice:hover {
-    background-color: rgba(0, 0, 0, 0.03);
-    transform: translateY(-2px);
-  }
-  
-  .selected-yes {
-    background-color: rgba(231, 84, 128, 0.1);
-    border: 2px solid rgba(231, 84, 128, 0.3);
-    transform: translateY(-2px);
-  }
-  
-  .selected-no {
-    background-color: rgba(37, 99, 235, 0.1);
-    border: 2px solid rgba(37, 99, 235, 0.3);
-    transform: translateY(-2px);
-  }
-  
-  .icon-wrapper {
-    padding: 0.5rem;
-    position: relative;
-    margin-bottom: 0.5rem;
-    transform: scale(1.2);
-  }
-  
-  .label {
-    margin-top: 0.5rem;
-    font-weight: bold;
-    color: #37352f;
-    font-size: 1.2rem;
-    letter-spacing: 0.5px;
-  }
-  
-  /* Heart styles */
+  /* Yes/No Choice Styles from Heart Component */
   .heart-container {
     display: block;
     position: relative;
