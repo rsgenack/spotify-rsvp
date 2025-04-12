@@ -10,18 +10,18 @@ const archivoBlack = Archivo_Black({
 
 export const metadata = {
   title: 'Rebecca & Seth | RSVP',
-  description: 'RSVP form for Rebecca and Seth\'s wedding',
+  description: 'Please RSVP to the wedding of Rebecca Genack & Seth Gruhin',
   icons: {
     icon: '/favicon.png',
   },
   openGraph: {
     title: 'Rebecca & Seth | RSVP',
-    description: 'RSVP form for Rebecca and Seth\'s wedding - June 8, 2025',
+    description: 'Please RSVP to the wedding of Rebecca Genack & Seth Gruhin',
     images: [
       {
-        url: '/images/couple/couple-bar-photo.jpg',
-        width: 1024,
-        height: 1024,
+        url: '/api/og',
+        width: 1200,
+        height: 630,
         alt: 'Rebecca and Seth Wedding RSVP',
       }
     ],
@@ -31,8 +31,8 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Rebecca & Seth | RSVP',
-    description: 'RSVP form for Rebecca and Seth\'s wedding - June 8, 2025',
-    images: ['/images/couple/couple-bar-photo.jpg'],
+    description: 'Please RSVP to the wedding of Rebecca Genack & Seth Gruhin',
+    images: ['/api/og'],
   },
   metadataBase: new URL('https://rsvp.thegruhins.com'),
 }
