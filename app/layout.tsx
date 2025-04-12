@@ -19,9 +19,9 @@ export const metadata = {
     description: 'RSVP form for Rebecca and Seth\'s wedding - June 8, 2025',
     images: [
       {
-        url: '/images/couple/bar-photo.jpg',
-        width: 1200,
-        height: 1200,
+        url: '/images/couple/couple-bar-photo.jpg',
+        width: 1024,
+        height: 1024,
         alt: 'Rebecca and Seth Wedding RSVP',
       }
     ],
@@ -32,7 +32,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Rebecca & Seth | RSVP',
     description: 'RSVP form for Rebecca and Seth\'s wedding - June 8, 2025',
-    images: ['/images/couple/bar-photo.jpg'],
+    images: ['/images/couple/couple-bar-photo.jpg'],
   },
   metadataBase: new URL('https://rsvp.thegruhins.com'),
 }
