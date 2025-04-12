@@ -549,11 +549,11 @@ const StyledWrapper = styled.div`
   
   .primary-button {
     display: inline-block;
-    background-color: #677a3e;
-    color: #f0e9d7;
+    background-color: #D2F348;
+    color: #37352f;
     font-weight: bold;
     padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 50px;
     border: none;
     cursor: pointer;
     text-decoration: none;
@@ -563,7 +563,7 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.05em;
     
     &:hover {
-      background-color: #556731;
+      background-color: #c2e139;
     }
     
     &:disabled {
@@ -575,11 +575,11 @@ const StyledWrapper = styled.div`
   
   .secondary-button {
     display: inline-block;
-    background-color: #bdbab2;
-    color: #37352f;
+    background-color: #677A3E;
+    color: #f0e9d7;
     font-weight: bold;
     padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 50px;
     border: none;
     cursor: pointer;
     text-decoration: none;
@@ -589,7 +589,7 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.05em;
     
     &:hover {
-      background-color: #a9a69e;
+      background-color: #556731;
     }
   }
   
