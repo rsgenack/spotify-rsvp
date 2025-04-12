@@ -489,15 +489,15 @@ const StyledWrapper = styled.div`
   }
   
   .existing-data-message {
-    background-color: rgba(0, 128, 0, 0.1);
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.5rem;
     margin-bottom: 2rem;
     
     .form-description {
       margin-bottom: 0;
-      color: rgb(0, 100, 0);
+      color: #677A3E;
       font-weight: bold;
+      font-size: 1.25rem;
     }
   }
   
