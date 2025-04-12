@@ -19,9 +19,9 @@ export const metadata = {
     description: 'Please RSVP to the wedding of Rebecca Genack & Seth Gruhin',
     images: [
       {
-        url: '/api/og',
-        width: 1200,
-        height: 630,
+        url: 'https://framerusercontent.com/images/4tGdZuQWS2bC7FvmVcbdTFse0Ys.jpg?scale-down-to=1024',
+        width: 1024,
+        height: 1024,
         alt: 'Rebecca and Seth Wedding RSVP',
       }
     ],
@@ -32,7 +32,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Rebecca & Seth | RSVP',
     description: 'Please RSVP to the wedding of Rebecca Genack & Seth Gruhin',
-    images: ['/api/og'],
+    images: ['https://framerusercontent.com/images/4tGdZuQWS2bC7FvmVcbdTFse0Ys.jpg?scale-down-to=1024'],
   },
   metadataBase: new URL('https://rsvp.thegruhins.com'),
 }

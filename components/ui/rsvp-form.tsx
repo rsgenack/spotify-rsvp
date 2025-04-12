@@ -549,7 +549,7 @@ const StyledWrapper = styled.div`
   .primary-button {
     display: inline-block;
     background-color: #D2F348;
-    color: #37352f;
+    color: #000000;
     font-weight: bold;
     padding: 0.8rem 1.5rem;
     border-radius: 50px;
@@ -560,6 +560,8 @@ const StyledWrapper = styled.div`
     text-align: center;
     transition: background-color 0.2s;
     letter-spacing: 0.05em;
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
     
     &:hover {
       background-color: #c2e139;
@@ -575,7 +577,7 @@ const StyledWrapper = styled.div`
   .secondary-button {
     display: inline-block;
     background-color: #677A3E;
-    color: #f0e9d7;
+    color: #FFFFFF;
     font-weight: bold;
     padding: 0.8rem 1.5rem;
     border-radius: 50px;
@@ -586,6 +588,8 @@ const StyledWrapper = styled.div`
     text-align: center;
     transition: background-color 0.2s;
     letter-spacing: 0.05em;
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
     
     &:hover {
       background-color: #556731;
