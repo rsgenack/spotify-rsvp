@@ -13,6 +13,26 @@ export const metadata = {
   description: 'RSVP form for Rebecca and Seth\'s wedding',
   icons: {
     icon: '/favicon.png',
+  },
+  openGraph: {
+    title: 'Rebecca & Seth | RSVP',
+    description: 'RSVP form for Rebecca and Seth\'s wedding - June 8, 2025',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Rebecca and Seth Wedding RSVP',
+      }
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rebecca & Seth | RSVP',
+    description: 'RSVP form for Rebecca and Seth\'s wedding - June 8, 2025',
+    images: ['/og-image.jpg'],
   }
 }
 
