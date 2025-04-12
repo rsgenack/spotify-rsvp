@@ -141,7 +141,8 @@ export async function GET(request: NextRequest) {
     // Add kidsInvited information to the response
     const response_data = {
       guests: allGuests,
-      familyGroups: familyGroups
+      familyGroups: familyGroups,
+      records: data.records // Include the full records data
     };
 
     console.log(`Returning ${allGuests.length} guests`);

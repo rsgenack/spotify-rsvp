@@ -92,8 +92,53 @@ export function RSVPForm() {
       
       setGuests(data.guests)
       setFamilyGroups(data.familyGroups)
+
+      // Pre-populate responses from existing RSVP data
+      const initialResponses: Record<string, boolean> = {}
+      let additionalNotes = ""
+      let songRequestValue = ""
+
+      // Loop through family groups to find additional data
+      data.familyGroups.forEach((family: FamilyGroup) => {
+        // Get first record to check for notes and song request
+        if (family.recordId && family.guests.length > 0) {
+          // Find the records in the original data to get notes and song request
+          const record = data.records?.find((r: any) => r.id === family.recordId)
+          if (record) {
+            console.log("Found record with fields:", record.fields)
+            additionalNotes = record.fields.Additional_Notes || ""
+            songRequestValue = record.fields.Song_Request || ""
+          }
+        }
+
+        // Process each guest's attendance
+        family.guests.forEach((guest: Guest) => {
+          console.log(`Guest ${guest.name} attendance:`, guest.attending)
+          // Convert 'Yes'/'No' string values to boolean
+          if (guest.attending !== null && guest.attending !== undefined) {
+            // If the value is a string 'Yes' or 'No', convert to boolean
+            if (typeof guest.attending === 'string') {
+              initialResponses[guest.id] = guest.attending === 'Yes'
+            } 
+            // If it's already a boolean, use directly
+            else if (typeof guest.attending === 'boolean') {
+              initialResponses[guest.id] = guest.attending
+            }
+          }
+        })
+      })
+
+      // Set the pre-populated values
+      console.log("Initial responses:", initialResponses)
+      console.log("Additional notes:", additionalNotes)
+      console.log("Song request:", songRequestValue)
+      setResponses(initialResponses)
+      setNotes(additionalNotes)
+      setSongRequest(songRequestValue)
+      
       setStep("guests")
     } catch (err) {
+      console.error("Error searching for guests:", err)
       setError("Something went wrong. Please try again.")
     } finally {
       setIsSearching(false)
@@ -218,11 +263,20 @@ export function RSVPForm() {
 
   // Guest Response Screen
   if (step === "guests") {
+    // Check if this is a previous submission by looking at existing selections
+    const hasExistingResponses = Object.keys(responses).length > 0;
+
     return (
       <StyledWrapper>
         <div className="content-wrapper">
           <h1>RSVP</h1>
-          <p className="form-description">We found {guests.length} {guests.length === 1 ? "guest" : "guests"} for your party.</p>
+          {hasExistingResponses ? (
+            <div className="existing-data-message">
+              <p className="form-description">We found your previous RSVP! You can update your selections if needed.</p>
+            </div>
+          ) : (
+            <p className="form-description">We found {guests.length} {guests.length === 1 ? "guest" : "guests"} for your party.</p>
+          )}
           
           <form onSubmit={handleSubmit}>
             <div className="form-section">
@@ -421,6 +475,19 @@ const StyledWrapper = styled.div`
   .form-description {
     margin-bottom: 2rem;
     font-size: 1.1rem;
+  }
+  
+  .existing-data-message {
+    background-color: rgba(0, 128, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    
+    .form-description {
+      margin-bottom: 0;
+      color: rgb(0, 100, 0);
+      font-weight: bold;
+    }
   }
   
   .form-section {

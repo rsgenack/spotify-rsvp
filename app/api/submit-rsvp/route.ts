@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
         acc[response.recordId] = {
           id: response.recordId,
           fields: {
-            // Use the exact field names from Airtable CSV file
+            // Use the exact field names that match Airtable
             'Song_Request': body.songRequest || '',
             'Additional_Notes': body.notes || '',
           },
