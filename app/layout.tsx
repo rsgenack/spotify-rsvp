@@ -9,8 +9,11 @@ const archivoBlack = Archivo_Black({
 })
 
 export const metadata = {
-  title: 'RSVP Form',
-  description: 'Minimalist RSVP form with Airtable integration',
+  title: 'Rebecca & Seth | RSVP',
+  description: 'RSVP form for Rebecca and Seth\'s wedding',
+  icons: {
+    icon: '/favicon.png',
+  }
 }
 
 export default function RootLayout({
@@ -24,6 +27,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+        <link rel="icon" href="/favicon.png" />
         {/* Google Analytics */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-F49NS3SCY6" />
         <Script id="google-analytics">
