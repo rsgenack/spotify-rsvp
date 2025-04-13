@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+main/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -9,10 +10,13 @@
 
 # next.js
 /.next/
+main/.next/
 /out/
+main/out/
 
 # production
 /build
+main/build
 
 # misc
 .DS_Store
@@ -26,6 +30,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+main/.env
 
 # vercel
 .vercel
@@ -33,3 +38,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# User-specific configuration
+config.js
+v0-user-next.config.mjs

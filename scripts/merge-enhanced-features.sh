@@ -1,3 +1,51 @@
+#!/bin/bash
+
+# Create necessary directories if they don't exist
+mkdir -p app/api/spotify/add-to-playlist
+mkdir -p app/api/spotify/auth
+mkdir -p app/api/spotify/callback
+mkdir -p app/api/spotify/search
+mkdir -p app/api/spotify/token
+mkdir -p app/api/submit-rsvp
+mkdir -p app/admin
+mkdir -p app/spotify-auth-error
+mkdir -p app/spotify-auth-success
+mkdir -p components/ui
+mkdir -p hooks
+mkdir -p lib
+mkdir -p public/images/icons
+mkdir -p styles
+
+# Copy enhanced app directory from main
+cp -r main/app/api/spotify app/api/
+cp -r main/app/api/submit-rsvp app/api/
+cp -r main/app/admin app/
+cp -r main/app/spotify-auth-error app/
+cp -r main/app/spotify-auth-success app/
+
+# Copy necessary root files
+cp main/app/layout.tsx app/
+cp main/app/globals.css app/
+cp main/app/page.tsx app/
+
+# Copy components
+cp -r main/components/ui/* components/ui/
+
+# Copy other necessary directories
+cp -r main/hooks/* hooks/
+cp -r main/lib/* lib/
+cp -r main/public/* public/
+cp -r main/styles/* styles/
+
+# Copy configuration files
+cp main/tailwind.config.ts ./
+cp main/postcss.config.mjs ./
+cp main/components.json ./
+cp main/package.json ./
+cp main/.env ./
+
+# Update README.md with new features
+cat << 'EOF' > README.md
 # Enhanced RSVP Form with Airtable Integration and Spotify Song Requests
 
 An enhanced implementation of an RSVP form that connects to Airtable and includes Spotify song request integration and dietary restriction options.
@@ -68,3 +116,6 @@ npm run dev
 ```
 
 The application will be available at http://localhost:3000.
+EOF
+
+echo "Merge complete! Please review the changes and then commit them." 
