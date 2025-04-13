@@ -42,3 +42,7 @@ next-env.d.ts
 # User-specific configuration
 config.js
 v0-user-next.config.mjs
+
+# Build artifacts
+.next/
+main/.next/
