@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { withSpotifyToken } from '@/lib/spotify-token-manager';
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,35 +11,28 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Search query is required' }, { status: 400 });
     }
 
-    // Get token from our token endpoint
-    const tokenResponse = await fetch(new URL('/api/spotify/token', request.url).toString());
-    
-    if (!tokenResponse.ok) {
-      throw new Error('Failed to get Spotify token');
-    }
-    
-    const { access_token } = await tokenResponse.json();
-
-    // Search for tracks on Spotify
-    const spotifyResponse = await fetch(
-      `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`,
-      {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${access_token}`,
-        },
+    // Use the token manager to get a token and search Spotify
+    const result = await withSpotifyToken(async (token) => {
+      const spotifyResponse = await fetch(
+        `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+  
+      if (!spotifyResponse.ok) {
+        const errorData = await spotifyResponse.json();
+        throw new Error(`Spotify API error: ${spotifyResponse.status} - ${JSON.stringify(errorData)}`);
       }
-    );
-
-    if (!spotifyResponse.ok) {
-      const errorData = await spotifyResponse.json();
-      throw new Error(`Spotify API error: ${spotifyResponse.status} - ${JSON.stringify(errorData)}`);
-    }
-
-    const data = await spotifyResponse.json();
+  
+      return spotifyResponse.json();
+    });
     
     // Format the response to include only the data we need
-    const tracks = data.tracks.items.map((track: any) => ({
+    const tracks = result.tracks.items.map((track: any) => ({
       id: track.id,
       name: track.name,
       artist: track.artists.map((artist: any) => artist.name).join(', '),
